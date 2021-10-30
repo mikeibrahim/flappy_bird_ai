@@ -22,31 +22,29 @@ public class Agent : MonoBehaviour {
 		Collisions();
     }
 
-	private void Fall() {
-		velocity.y += gravity * Time.deltaTime;
-	}
+	private void Fall() => velocity.y += gravity * Time.deltaTime;
 
 	private void Jump() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.Space))
 			velocity.y = jumpSpeed;
-		}
 	}
 
-	private void Physics() {
-		transform.Translate(velocity * Time.deltaTime);
-	}
+	private void Physics() => transform.Translate(velocity * Time.deltaTime);
 
 	private void Collisions() {
 		RaycastHit2D hit = Physics2D.CircleCast(transform.position, bodySize / 2f, Vector2.zero);
-		if (hit.collider != null) {
-			if (hit.collider.GetComponent<Pipe>() != null) {
-				Die();
-			}
-		}
+		if (hit.collider == null)
+			return;
+		if (hit.collider.GetComponent<Pipe>() != null)
+			Die();
 	}
 
 	private void Die() {
-		gameObject.SetActive(false);
-		// print("died");
+		AgentManager.inst.ReturnAgent(this);
+	}
+
+	public void ResetPosition() {
+		transform.position = Vector3.zero;
+		velocity = Vector2.zero;
 	}
 }
