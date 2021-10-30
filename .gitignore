@@ -1,0 +1,10 @@
+/.vscode
+/Assembly-CSharp.csproj
+/Library
+/Logs
+/Packages
+/ProjectSettings
+/Temp
+/UserSettings
+/flappy_bird_ai.sln
+/obj
