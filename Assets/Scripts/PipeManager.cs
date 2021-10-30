@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeManager : MonoBehaviour {
+	public static PipeManager inst;
 	[SerializeField] private Pipe pipePrefab;
-	private float 	spawninterval = 2.5f,
-					pipeSpeed = 2f,
-					holeSize = 1f;
+	private static int pipeBuffer = 20;
+	private List<Pipe> pipes = new List<Pipe>();
+	private float 	spawninterval = 2f,
+					pipeSpeed = 2.25f,
+					holeSize = 1.5f;
 	float currentSpawnInterval;
 	float screenHeight, screenWidth;
+
+	void Awake() {
+		inst = this;
+	}
 	
     void Start() {
 		screenHeight = Camera.main.orthographicSize;
 		screenWidth = screenHeight * Camera.main.aspect;
 		currentSpawnInterval = spawninterval;
+		LoadPipes();
     }
 
     void FixedUpdate() {
@@ -25,20 +33,42 @@ public class PipeManager : MonoBehaviour {
 		}
     }
 
-	private void SpawnPipeGroup() {
-		Pipe p1 = Instantiate(pipePrefab);
-		p1.transform.position = new Vector3(screenWidth + 1, -screenHeight, 0);
-		p1.SetSpeed(pipeSpeed);
+	private void LoadPipes() {
+		for (int i = 0; i < pipeBuffer; i++) {
+			Pipe newPipe = Instantiate(pipePrefab);
+			pipes.Add(newPipe);
+			newPipe.gameObject.SetActive(false);
+		}
+	}
 
-		Pipe p2 = Instantiate(pipePrefab);
+	private Pipe GetPipe() {
+		Pipe p = pipes[0];
+		pipes.RemoveAt(0);
+		p.gameObject.SetActive(true);
+		return p;
+	}
+
+	private void SpawnPipeGroup() {
+		// Object Pooling 
+		Pipe p1 = GetPipe();
+		Pipe p2 = GetPipe();
+
+		// Positioning the pipes at the top and bottom of the screen
+		p1.transform.position = new Vector3(screenWidth + 1, -screenHeight, 0);
+
 		p2.transform.localScale = new Vector3(-1, 1, 1);
 		p2.transform.position = new Vector3(screenWidth + 1, screenHeight, 0);
 		p2.transform.Rotate(0, 0, 180);
-		p2.SetSpeed(pipeSpeed);
 
+		// Getting a random point for the hole
 		float holePos = Random.Range(-screenHeight + 1 + holeSize, screenHeight - 1 - holeSize);
 
+		// Setting the pipe heights
 		p1.SetHeight(screenHeight - holePos - holeSize);
 		p2.SetHeight(screenHeight + holePos - holeSize);
+
+		// Setting the pipe speeds
+		p1.SetSpeed(pipeSpeed);
+		p2.SetSpeed(pipeSpeed);
 	}
 }

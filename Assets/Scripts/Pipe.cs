@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pipe : MonoBehaviour {
-	private float speed;
+	float speed;
 
 	public void SetSpeed(float speed) => this.speed = speed;
 
