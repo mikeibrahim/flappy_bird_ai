@@ -17,15 +17,10 @@ public class Agent : MonoBehaviour {
 
 	public AgentBrain GetBrain() => this.brain;
 	public void SetBrain(AgentBrain brain) => this.brain = brain;
-	public void MutateBrain(float mutationRate) => brain.Mutate(mutationRate);
+	public void MutateBrain(float mutationRate, float mutationChance) => brain.Mutate(mutationRate, mutationChance);
 
 	// private void Update() {
-	// 	Jump(); // Temporary
-	// }
-
-	// private void Jump() {
-	// 	if (Input.GetKeyDown(KeyCode.Space))
-	// 		velocity.y = jumpSpeed;
+	// 	Jump();
 	// }
 
 	private void FixedUpdate() {
@@ -33,7 +28,15 @@ public class Agent : MonoBehaviour {
 		Physics();
 		Collisions();
 		BrainDecisions();
+		// Jump();
     }
+
+	
+	// private void Jump() {
+	// 	if (Input.GetKeyDown(KeyCode.Space)) {
+	// 		velocity.y = jumpSpeed;
+	// 	}
+	// }
 
 	private void Fall() => velocity.y += gravity * Time.deltaTime;
 
@@ -47,10 +50,6 @@ public class Agent : MonoBehaviour {
 			if (hit.collider.GetComponent<Pipe>() || hit.collider.tag == "Boundary")
 				ReturnAgent();
 		}
-		// if (hit.collider == null)
-		// 	return;
-		// if (hit.collider.GetComponent<Pipe>() != null)
-		// 	ReturnAgent();
 	}
 
 	private void ReturnAgent() {
@@ -103,10 +102,10 @@ public class AgentBrain {
 			biases[i].Randomize(min, max);
 		}
 	}
-	public void Mutate(float mutationRate) {
+	public void Mutate(float mutationRate, float mutationChance) {
 		for (int i = 0; i < structure.Length - 1; i++) {
-			weights[i].Mutate(mutationRate);
-			biases[i].Mutate(mutationRate);
+			weights[i].Mutate(mutationRate, mutationChance);
+			biases[i].Mutate(mutationRate, mutationChance);
 		}
 	}
 

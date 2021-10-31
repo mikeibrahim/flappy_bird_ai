@@ -64,10 +64,11 @@ public class Matrix {
 				data[i, j] = Random.Range(min, max);
 	}
 
-	public void Mutate(float mutationRate) {
+	public void Mutate(float mutationRate, float mutationChance) {
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
-				data[i, j] += Random.Range(-1f, 1f) * mutationRate;
+				if (Random.Range(0f, 1f) < mutationChance)
+					data[i, j] += Random.Range(-1f, 1f) * mutationRate;
 	}
 
 	public void Print() {

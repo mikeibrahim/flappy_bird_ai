@@ -11,7 +11,7 @@ public class PipeManager : MonoBehaviour {
 	private float 	spawninterval = 2f,
 					pipeSpeed = 4f,
 					holeSize = 1.5f,
-					pipeWidth = 1.5f;
+					pipeWidth = 1.2f;
 	float 	currentSpawnInterval,
 			screenHeight, screenWidth,
 			pipeDeath;
@@ -95,7 +95,7 @@ public class PipeManager : MonoBehaviour {
 		StartCoroutine(p2.DeathTimer(pipeDeath));
 
 		// The timer for score
-		StartCoroutine(ScoreTimer(pipeDeath / 2f + 0.2f));
+		StartCoroutine(ScoreTimer(pipeDeath / 2f + 0.3f));
 
 		// For the inputs to the agents
 		closestPipes.Add(p1);

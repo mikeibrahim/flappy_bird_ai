@@ -7,7 +7,9 @@ public class AgentManager : MonoBehaviour {
 	[SerializeField] private Agent agentPrefab;
 	public static int agentBufferSize = 250;
 	private List<Agent> agentBuffer = new List<Agent>();
-	private float cloningChance = 0.02f;
+	private float 	cloningChance = 0.02f,
+					mutationChance = 0.5f,
+					mutationRate = 0.1f;
 
     void Awake() { inst = this; }
 
@@ -41,7 +43,7 @@ public class AgentManager : MonoBehaviour {
 					// Replace bad brain with good brain
 					bad.SetBrain(good.GetBrain());
 					// Mutate bad brain
-					bad.MutateBrain(0.01f);
+					bad.MutateBrain(mutationRate, mutationChance);
 					i--;
 					continue;
 				}
