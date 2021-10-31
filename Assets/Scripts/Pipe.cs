@@ -13,6 +13,7 @@ public class Pipe : MonoBehaviour {
 	public void SetSpeed(float speed) => this.speed = speed;
 
 	public void SetHeight(float height) => spriteRenderer.size = new Vector2(1, height);
+	public float GetHeight() => spriteRenderer.size.y;
 
 	void FixedUpdate() {
         this.transform.Translate(-transform.right * speed * Time.deltaTime);
