@@ -7,7 +7,7 @@ public class AgentManager : MonoBehaviour {
 	[SerializeField] private Agent agentPrefab;
 	public static int agentBufferSize = 250;
 	private List<Agent> agentBuffer = new List<Agent>();
-	private float 	cloningChance = 0.02f,
+	private float 	cloningChance = 0.05f,
 					mutationChance = 0.5f,
 					mutationRate = 0.1f;
 

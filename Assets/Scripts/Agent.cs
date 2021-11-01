@@ -6,7 +6,7 @@ public class Agent : MonoBehaviour {
 	private AgentBrain brain = null;
 	private float 	gravity = -40f,
 					jumpSpeed = 12f,
-					bodySize = 0.85f;
+					bodySize = 0.75f;
 	private Vector2 velocity = Vector2.zero;
 
 	private void Start() {
